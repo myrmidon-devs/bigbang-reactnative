@@ -147,3 +147,11 @@ src/
 ## Autor
 
 Creado por **Julio Alberto Pancorbo Montoro** ([@juliocodex](https://github.com/JulioPancorbo)).
+
+---
+
+## ☕ Apóyame
+
+Si este template te ha ahorrado horas de setup, puedes invitarme a un café. ¡Se agradece mucho!
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-juliocodex-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/juliocodex)

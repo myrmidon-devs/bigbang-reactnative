@@ -58,7 +58,7 @@ npm install --save-dev jest @testing-library/react-native @testing-library/jest-
 // jest.config.js
 module.exports = {
   preset: 'jest-expo',
-  setupFilesAfterFramework: ['@testing-library/jest-native/extend-expect'],
+  setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)',
   ],
@@ -82,8 +82,7 @@ module.exports = {
 ```
 tests/
 ├── __mocks__/
-│   ├── @react-native-async-storage/
-│   │   └── async-storage.ts
+│   ├── expo-secure-store.ts
 │   └── @/services/
 │       └── api.ts
 ├── unit/

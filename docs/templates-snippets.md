@@ -676,13 +676,13 @@ import { AppStack } from './stacks/AppStack'
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export function RootNavigator() {
-  const { token, isLoaded } = useAuthStore()
+  const { token, isGuest, isLoaded } = useAuthStore()
 
   if (!isLoaded) return null
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {token ? (
+      {token || isGuest ? (
         <Stack.Screen name="App" component={AppStack} />
       ) : (
         <Stack.Screen name="Auth" component={AuthStack} />

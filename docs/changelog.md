@@ -1,9 +1,30 @@
 ---
 title: Changelog
-version: 1.7
+version: 2.0
 ---
 
 # Changelog
+
+## 2026-03 v2.0 — Alineación final de skill, references y documentación base
+
+**Motivación:** La skill `bigbang-reactnative`, sus phases de referencia y varios documentos base habían acumulado pequeñas desalineaciones. Ninguna por separado parecía grande, pero en conjunto permitían que el agente generase proyectos incompletos, mezclara convenciones antiguas o no comunicara correctamente el cierre y los siguientes pasos.
+
+**Cambios:**
+- `.copilot/skills/bigbang-reactnative/SKILL.md` — Reforzada la ejecución estricta: seguir pasos uno a uno, no inventar nada, validar cada checklist antes de avanzar y obligar a incluir los siguientes pasos al finalizar.
+- `.copilot/skills/bigbang-reactnative/SKILL.md` — Derivación automática de `PROJECT_NAME` desde la carpeta raíz; eliminado el comportamiento de pedir nombre/directorio al usuario. Blindado el scaffold en raíz con `create-expo-app .`.
+- `.copilot/skills/bigbang-reactnative/references/phase-1-bootstrap.md` — Bootstrap fijado en la raíz del workspace y texto normalizado a inglés en la fase. Añadida edición explícita de `app.json` (`name` y `slug`).
+- `.copilot/skills/bigbang-reactnative/references/phase-4-state-hooks.md` — Guest mode y recovery alineados: `isGuest`, `setAsGuest()` y `useToast.ts` ya forman parte de la definición y la recuperación de la fase.
+- `.copilot/skills/bigbang-reactnative/references/phase-5-navigation.md` — `RootNavigator` alineado con guest mode usando `token || isGuest`.
+- `.copilot/skills/bigbang-reactnative/references/phase-6-ui.md` — Home ya no puede degradarse a placeholder; se exige la plantilla completa con mock data. `App.tsx` documenta correctamente `SafeAreaProvider`, `ErrorBoundary`, `verifyInstallation()`, `Toast` y el orden real de anidación.
+- `docs/agent-instructions.md` — Añadida regla de ejecución estricta. Home ya exige la plantilla completa y `App.tsx` se valida con `SafeAreaProvider`, `ErrorBoundary`, `NavigationContainer` y `Toast`.
+- `docs/project-setup.md` — Confirmado scaffold siempre en la raíz del repo con `create-expo-app .` y verificación con `expo-doctor`.
+- `docs/navigation-patterns.md` y `docs/templates-snippets.md` — `RootNavigator` y `App.tsx` sincronizados con guest mode, `SafeAreaProvider`, `ErrorBoundary`, `Toast` y `verifyInstallation()`.
+- `docs/hooks-and-state.md` — `authStore` y `useAuth` alineados con `isGuest` y `setAsGuest()`.
+- `docs/services-and-api.md` — Eliminadas referencias obsoletas a `clearToken()` y a `notifications.ts` como parte obligatoria del baseline.
+- `docs/structure-guide.md` y `README.md` — Eliminadas referencias ambiguas a RTK/Redux Toolkit como alternativa del template base. El estado global del baseline queda fijado en Zustand para auth.
+- `docs/testing-ci.md` — Corregido `setupFilesAfterEnv` y actualizados ejemplos de mocks hacia `expo-secure-store`.
+
+---
 
 ## 2026-03 v1.9 — Endurecimiento preventivo de Expo Go + NativeWind v4
 

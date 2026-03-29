@@ -171,7 +171,7 @@ import type { LoginPayload, RegisterPayload } from '@/services/auth'
 
 export function useAuth() {
   const queryClient = useQueryClient()
-  const { token, user, setAuth, clearAuth } = useAuthStore()
+  const { token, user, isGuest, setAuth, setAsGuest, clearAuth } = useAuthStore()
 
   const login = useCallback(async (payload: LoginPayload) => {
     const response = await loginService(payload)
@@ -352,8 +352,10 @@ type AuthUser = { id: number; name: string; email: string; role_id: number }
 type AuthStore = {
   token: string | null
   user: AuthUser | null
+  isGuest: boolean
   isLoaded: boolean         // true cuando ya se comprobó el token guardado al arrancar
   setAuth: (token: string, user: AuthUser) => void
+  setAsGuest: () => void
   clearAuth: () => void
   loadToken: () => Promise<void>  // lee el token persistido y actualiza el estado
 }
@@ -361,11 +363,14 @@ type AuthStore = {
 export const useAuthStore = create<AuthStore>((set) => ({
   token: null,
   user: null,
+  isGuest: false,
   isLoaded: false,
 
-  setAuth: (token, user) => set({ token, user }),
+  setAuth: (token, user) => set({ token, user, isGuest: false }),
 
-  clearAuth: () => set({ token: null, user: null }),
+  setAsGuest: () => set({ isGuest: true, token: null, user: null }),
+
+  clearAuth: () => set({ token: null, user: null, isGuest: false }),
 
   // Lee el token persistido al arrancar la app
   loadToken: async () => {

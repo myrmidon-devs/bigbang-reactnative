@@ -67,13 +67,14 @@ If these files exist, this phase was likely already completed:
 - `src/store/authStore.ts`
 - `src/hooks/useAuth.ts`
 - `src/hooks/useFormState.ts`
+- `src/hooks/useToast.ts`
 
 ---
 
 ## Verification Checklist
 
 - [ ] `src/store/authStore.ts` exists with Zustand store (NOT Redux)
-- [ ] `authStore` has: token, user, isLoaded, setAuth, clearAuth, loadToken
+- [ ] `authStore` has: token, user, isGuest, isLoaded, setAuth, setAsGuest, clearAuth, loadToken
 - [ ] `loadToken()` reads from `@/services/storage` (not AsyncStorage directly)
 - [ ] `src/hooks/useAuth.ts` exists, calls services from `@/services/auth` (NOT Axios directly)
 - [ ] `useAuth().logout()` clears both authStore AND React Query cache

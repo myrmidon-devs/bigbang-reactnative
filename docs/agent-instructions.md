@@ -9,6 +9,19 @@ Este archivo define el flujo operativo exacto que debe seguir un agente IA para 
 
 ---
 
+## Regla -1 — Ejecución estricta
+
+Estas reglas aplican **siempre** y tienen prioridad operativa durante toda la ejecución:
+
+1. Seguir la skill y los docs **exactamente como están escritos**.
+2. Ejecutar los pasos **uno a uno y en orden**. No fusionar, comprimir, reordenar ni saltarse pasos.
+3. Completar y comprobar la verificación de cada paso antes de pasar al siguiente.
+4. No asumir ni inventar archivos, convenciones, dependencias, nombres o comportamiento no descritos.
+5. Si falta una instrucción, hay ambigüedad o hay contradicción entre documentos, detenerse y consultarlo con el usuario en lugar de improvisar.
+6. Al terminar, no basta con un resumen: hay que comunicar también los siguientes pasos operativos.
+
+---
+
 ## Regla 0 — Gestor de paquetes
 
 **Antes de cualquier instalación:**
@@ -128,7 +141,7 @@ Este archivo define el flujo operativo exacto que debe seguir un agente IA para 
 1. Crear `src/screens/Welcome/index.tsx` — Pantalla de bienvenida con título y botón "Continuar" → navega a Login
 2. Crear `src/screens/Login/index.tsx` — Formulario email/password con `useForm` + `useAuth`, enlace a Register
 3. Crear `src/screens/Register/index.tsx` — Formulario nombre/email/password/confirmar con `useForm` + `useAuth`, enlace a Login
-4. Crear `src/screens/Home/index.tsx` — Pantalla principal base (contenido placeholder)
+4. Crear `src/screens/Home/index.tsx` — Pantalla principal usando la **plantilla completa** de `docs/templates-snippets.md`, incluyendo los datos mock y el layout base. No sustituirla por un placeholder simplificado.
 5. Crear `src/screens/Profile/index.tsx` — Pantalla de perfil con datos placeholder y botón "Cerrar sesión" (`useAuth().logout`)
 
 **Verificación obligatoria:**
@@ -185,7 +198,7 @@ Este archivo define el flujo operativo exacto que debe seguir un agente IA para 
 **Verificación obligatoria:**
 - [ ] ¿Cada nuevo archivo sigue el esqueleto de la plantilla correspondiente?
 - [ ] ¿Los `index.ts` re-exportan correctamente?
-- [ ] ¿`App.tsx` importa `global.css` y usa `QueryClientProvider` + `NavigationContainer` + `RootNavigator`?
+- [ ] ¿`App.tsx` importa `global.css` y usa `SafeAreaProvider` + `QueryClientProvider` + `ErrorBoundary` + `NavigationContainer` + `RootNavigator` + `Toast`?
 
 ---
 
@@ -204,6 +217,7 @@ Este archivo define el flujo operativo exacto que debe seguir un agente IA para 
 ## Reglas operativas
 
 - **No crear ningún archivo antes de leer el doc correspondiente.**
+- **No saltarse pasos ni verificaciones.** Cada checklist debe quedar validado antes de continuar.
 - Ante la duda entre dos enfoques, elegir el más simple.
 - Si algo no está en la guía, consulta con el usuario antes de inventar convenciones.
 - Si identificas una mejora a la guía, anótala en `docs/changelog.md` (no modifiques los otros docs sin consenso).

@@ -155,8 +155,7 @@ services/
 ├── api.ts           ← Cliente Axios + métodos genéricos CRUD + sub-entidades + upload
 ├── auth.ts          ← Login, logout, registro y social auth
 ├── storage.ts       ← Token seguro con expo-secure-store (NO AsyncStorage)
-├── logger.ts        ← Logging (no console.log)
-└── notifications.ts ← Push notifications
+└── logger.ts        ← Logging (no console.log)
 ```
 
 ### `src/store/`
@@ -164,15 +163,15 @@ services/
 **Propósito:** Estado global reactivo. Usa **Zustand para auth** y **React Query para datos del servidor**. No mezcles ambas librerías para el mismo dato.
 
 Reglas:
-- ✅ `authStore.ts` con Zustand — token, usuario, `loadToken()`, `setAuth()`, `clearAuth()`
+- ✅ `authStore.ts` con Zustand — token, usuario, `isGuest`, `loadToken()`, `setAuth()`, `setAsGuest()`, `clearAuth()`
 - ✅ Datos del servidor (entidades) → React Query (`useQuery`/`useMutation` en hooks)
 - ❌ No guardar listas de entidades en Zustand (eso va en React Query cache)
-- ❌ No usar Redux Toolkit salvo que el proyecto tenga estado complejo multi-dominio
+- ❌ No usar Redux Toolkit en este template
 
 Estructura:
 ```
 store/
-└── authStore.ts   ← Estado de sesión (token + user + loadToken)
+└── authStore.ts   ← Estado de sesión (token + user + isGuest + loadToken)
 ```
 
 Ver detalle completo en `docs/hooks-and-state.md`.

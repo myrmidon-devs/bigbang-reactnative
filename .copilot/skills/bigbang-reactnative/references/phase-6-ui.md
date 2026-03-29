@@ -96,19 +96,23 @@ Copy from `docs/templates-snippets.md` section "Profile — Perfil de usuario":
 
 Copy from `docs/templates-snippets.md` section "App.tsx — Punto de entrada":
 Must include ALL of these providers/components in the correct nesting order:
-1. `QueryClientProvider` (outermost data layer)
-2. `ErrorBoundary`
-3. `AppBootstrap` (loads token on mount)
-4. `NavigationContainer`
-5. `RootNavigator`
-6. `<Toast />` (last child, renders on top)
+1. `SafeAreaProvider` (outermost provider)
+2. `QueryClientProvider`
+3. `ErrorBoundary`
+4. `AppBootstrap` (loads token on mount)
+5. `NavigationContainer`
+6. `RootNavigator`
+7. `<Toast />` (last child, outside `ErrorBoundary`, renders on top)
 
 **Nativewind v4 setup in App.tsx:**
 - Import `../global.css` at the top of the file
+- Import `SafeAreaProvider` from `react-native-safe-area-context`
+- Wrap the full app tree with `SafeAreaProvider`
 - Do NOT add `TailwindProvider`
 
 **AppBootstrap component:**
-- Reads `useAuthStore((s) => s.loadToken)` 
+- Reads `useAuthStore((s) => s.loadToken)`
+- Runs `verifyInstallation()` only inside `if (__DEV__)`
 - Calls `loadToken()` in `useEffect`
 - Returns `null`
 
@@ -142,11 +146,11 @@ If these files exist, this phase was likely already completed:
 - [ ] Register validates passwords match
 - [ ] Register has link to Login
 - [ ] Profile has logout button calling `useAuth().logout`
-- [ ] All screens use `SafeAreaView` from `react-native-safe-area-context` (except Home which uses ScrollView)
+- [ ] All screens use `SafeAreaView` from `react-native-safe-area-context` (Home wraps its `ScrollView` inside `SafeAreaView`)
 - [ ] NO screen calls Axios directly — all through hooks
 - [ ] NO screen uses `Alert.alert()` — errors handled in hooks
 - [ ] All styles use `className` (no `StyleSheet.create()`)
 - [ ] `src/App.tsx` imports `../global.css`
-- [ ] `src/App.tsx` has: QueryClientProvider + ErrorBoundary + NavigationContainer + RootNavigator + Toast
+- [ ] `src/App.tsx` nests: SafeAreaProvider → QueryClientProvider → ErrorBoundary → NavigationContainer → RootNavigator, with `<Toast />` as the last child outside `ErrorBoundary`
 - [ ] `App.tsx` has `AppBootstrap` component that calls `loadToken()` on mount
 - [ ] `<Toast />` is the last child (renders on top of everything)

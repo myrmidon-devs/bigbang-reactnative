@@ -48,9 +48,9 @@ All must import types from `./navigation-types` (relative within navigation is O
 
 Copy from `docs/navigation-patterns.md` section `RootNavigator.tsx`:
 - Creates `NativeStackNavigator<RootStackParamList>`
-- Reads `useAuthStore()` for `token` and `isLoaded`
+- Reads `useAuthStore()` for `token`, `isGuest`, and `isLoaded`
 - Returns `null` while `!isLoaded`
-- Shows `AuthStack` when no token, `AppStack` when token exists
+- Shows `AuthStack` when neither token nor guest mode is active, `AppStack` when `token || isGuest`
 - `screenOptions={{ headerShown: false }}`
 
 **CRITICAL:** RootNavigator points to AppStack, NOT to AppTabs directly.
@@ -105,6 +105,7 @@ If these files exist, this phase was likely already completed:
 - [ ] `NavigatorScreenParams` is used to connect AppStack → AppTabs
 - [ ] `src/navigation/hooks.ts` exists with 3 typed hooks
 - [ ] `src/navigation/RootNavigator.tsx` uses `useAuthStore` to decide Auth vs App
+- [ ] `RootNavigator` supports guest mode with `token || isGuest`
 - [ ] `RootNavigator` points to `AppStack` (NOT AppTabs directly)
 - [ ] `src/navigation/stacks/AuthStack.tsx` has Welcome, Login, Register
 - [ ] `src/navigation/stacks/AppStack.tsx` has MainTabs as first screen

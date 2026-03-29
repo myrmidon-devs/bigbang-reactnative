@@ -12,7 +12,7 @@
    - Exact `.env.example` content
    - Exact `src/App.tsx` skeleton (will be finalized in Phase 6)
 
-2. **`docs/nativewind-theme.md`** — Read the "Configuración `tailwind.config.js`" section for the complete Tailwind config with custom colors and spacing.
+2. **`docs/nativewind-theme.md`** — Read the "Configuracion `tailwind.config.js`" section for the complete Tailwind config with custom colors and spacing.
 
 ---
 
@@ -20,13 +20,13 @@
 
 ### Step 1.1 — Create Expo project
 
-> **REGLA CRÍTICA — Siempre en la raíz:**
-> El proyecto se crea SIEMPRE en TARGET_DIR (raíz del workspace). NUNCA pasar PROJECT_NAME
-> como argumento a `create-expo-app` — eso crearía un subdirectorio. Usar siempre el punto (`.`).
-> Tras el scaffold, actualizar el campo `name` y `slug` de `app.json` con PROJECT_NAME.
+> **CRITICAL RULE — Always in the workspace root:**
+> The project is ALWAYS created in TARGET_DIR (the workspace root). NEVER pass PROJECT_NAME
+> as the argument to `create-expo-app` — that would create a subdirectory. Always use `.` instead.
+> After scaffolding, update the `name` and `slug` fields in `app.json` with PROJECT_NAME.
 
 ```bash
-# Navegar a TARGET_DIR (raíz del workspace) y crear el proyecto EN ESE DIRECTORIO
+# Navigate to TARGET_DIR (workspace root) and create the project IN THAT DIRECTORY
 cd {TARGET_DIR}
 
 # pnpm (recomendado)
@@ -36,7 +36,7 @@ pnpm create expo-app .
 npx create-expo-app .
 ```
 
-A continuación, editar `app.json` para establecer el nombre real del proyecto:
+Then edit `app.json` to set the real project name:
 - `"name"` → PROJECT_NAME
 - `"slug"` → PROJECT_NAME
 

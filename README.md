@@ -98,7 +98,7 @@ src/
 │   └── stacks/
 ├── services/         API, auth, logger — TypeScript puro
 ├── hooks/            Custom hooks (puente Screen↔Service)
-├── store/            Estado global (RTK o Zustand, uno solo)
+├── store/            Estado global de sesión con Zustand
 ├── types/            Tipos globales compartidos
 ├── utils/            Validators, formatters, constants
 ├── assets/           images/ icons/ fonts/

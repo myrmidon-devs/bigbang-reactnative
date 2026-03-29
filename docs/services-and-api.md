@@ -18,8 +18,7 @@ services/
 ├── api.ts           ← Cliente Axios + métodos genéricos CRUD + sub-entidades
 ├── auth.ts          ← Login, logout, registro y social auth
 ├── storage.ts       ← Token seguro con expo-secure-store
-├── logger.ts        ← Logging (reemplaza console.log)
-└── notifications.ts ← Push notifications
+└── logger.ts        ← Logging (reemplaza console.log)
 ```
 
 ---
@@ -52,13 +51,13 @@ api.interceptors.request.use(async (config) => {
 })
 
 // Captura 401 globalmente y limpia la sesión
-// Para conectar con authStore, usa useAuthStore.getState().clearToken()
+// Para conectar con authStore, usa useAuthStore.getState().clearAuth()
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     if (error.response?.status === 401) {
       await removeToken()
-      // useAuthStore.getState().clearToken() ← se conecta desde authStore.ts
+      // useAuthStore.getState().clearAuth() ← se conecta desde authStore.ts
       logger.warn('Sesión expirada, token eliminado')
     }
     return Promise.reject(error)

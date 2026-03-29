@@ -13,17 +13,17 @@ This skill automates the creation of a complete React Native + Expo + TypeScript
 ## Architecture — Orchestrator + Subagents
 
 **CRITICAL: The main agent MUST NOT execute phases directly.** The main agent's ONLY job is:
-1. Run pre-flight checks (package manager, project name)
+1. Run pre-flight checks (package manager, derive project name from workspace root)
 2. Create the progress tracker
 3. Dispatch one subagent per phase, sequentially
 4. Read each subagent's result (PASS/FAIL)
 5. Update progress tracker after each phase
-6. Report final result to user
+6. Report final result to user, including the mandatory next steps from Step 4
 
 ```
 Main Agent (Orchestrator) — reads 0 docs, creates 0 project files
 │
-├─ Pre-flight: verify pnpm, ask project name, create progress tracker
+├─ Pre-flight: verify pnpm, derive project name from workspace root, create progress tracker
 │
 ├─ Subagent → Phase 1: Bootstrap
 │    Reads: phase-1-bootstrap.md → project-setup.md, nativewind-theme.md
@@ -67,6 +67,16 @@ Main Agent (Orchestrator) — reads 0 docs, creates 0 project files
 - Each subagent starts with a **clean context**: reads only ITS reference file + ITS docs → creates ITS files → reports back.
 - The progress tracker (`/memories/session/bigbang-progress.md`) is the **single shared state** between phases.
 - If a subagent fails, the main agent can **re-dispatch with failure context** without carrying accumulated baggage.
+
+### Execution Discipline — Mandatory
+
+- Follow the skill and the referenced docs **exactly as written**.
+- Execute steps **one by one, in order**. Do not skip, merge, reorder, or compress steps.
+- Verify each step against its checklist before moving to the next one.
+- Do **not** assume, infer, or invent missing files, conventions, dependencies, or implementation details.
+- If a required instruction is missing or ambiguous, **fail clearly** and surface the exact gap instead of improvising.
+- A phase is not complete until its verification checklist passes.
+- The whole workflow is not complete until the user receives both the completion summary **and** the mandatory next steps from Step 4.
 
 ---
 
@@ -143,9 +153,12 @@ CONTEXT:
 YOUR TASK:
 1. Read the reference file at: {WORKSPACE_ROOT}/.copilot/skills/bigbang-reactnative/references/phase-{N}-{name}.md
 2. The reference file lists which docs/ files to read. Read ALL of them from {WORKSPACE_ROOT}/docs/
-3. Execute EVERY step in the reference file. Create all listed files in {TARGET_DIR}.
-4. Run the verification checklist at the end of the reference file.
-5. If any check fails, fix it immediately and re-verify.
+3. Execute EVERY step in the reference file in the exact order written. Do NOT skip, merge, reorder, or simplify steps.
+4. After EACH step, confirm that the expected output exists and is complete before moving on.
+5. Create only the files, code, and configuration explicitly required by the reference file and docs in {TARGET_DIR}.
+6. Run the verification checklist at the end of the reference file.
+7. If any check fails, fix it immediately and re-verify.
+8. If any instruction is missing, contradictory, or ambiguous, do NOT guess or invent a solution. Stop and report the exact gap as a failure.
 
 CONVENTIONS (non-negotiable — apply to EVERY file you create):
 - NEVER use `any` type — use `unknown` + narrowing
@@ -183,6 +196,7 @@ Include a brief list of files created.
 
 ```
 IF result contains "COMPLETE":
+   → Confirm the phase explicitly reported that all checks passed
   → Update /memories/session/bigbang-progress.md: mark phase [x]
   → Proceed to next phase
 
@@ -193,6 +207,7 @@ IF result contains "FAILED":
      The project already exists at {TARGET_DIR}.
      Check which files from this phase already exist. Create only missing ones.
      Re-read the reference file and the specific doc section that failed.
+       Do not invent missing conventions or unstated behavior.
      Fix and retry. Report PASS or FAIL."
   → If second attempt also fails → STOP and report to user:
     "La fase {N} falló después de 2 intentos. Error: {reason}.
@@ -282,20 +297,20 @@ After all 7 phases report COMPLETE:
    - Number of phases completed (should be 7/7)
    - Phase 7 verification results (tsc, anti-patterns)
    - Any warnings from subagents
-
-3. Suggest next steps:
+3. The final user-facing message is **NOT complete** if it only contains a summary. It MUST also include the next steps below.
+4. Suggest next steps:
    ```
-   Proyecto base creado con éxito. Próximos pasos:
-   1. Probar el proyecto base: ejecutar `pnpm start` (o `npm start` si pnpm no está disponible)
-      y verificar que la app arranca sin errores en el simulador/dispositivo.
-   2. Configurar .env con la URL real de tu API Laravel:
-      - Desarrollo local: EXPO_PUBLIC_API_URL=http://localhost:8000/api
-      - Producción:       EXPO_PUBLIC_API_URL=https://tu-dominio.com/api
-   3. Crear carpeta docs-project/ con los documentos del proyecto concreto
-      (pantallas, modelos, endpoints, brief, etc. — cualquier especificación propia del proyecto)
-      y/o empezar a desarrollar y maquetar pantallas directamente.
-      El archivo .github/copilot-instructions.md garantiza que el agente seguirá
-      todas las directrices y buenas prácticas del stack en cada acción.
+   Base project created successfully. Next steps:
+   1. Test the base project: run `pnpm start` (or `npm start` if pnpm is not available)
+      and verify that the app starts without errors on the simulator/device.
+   2. Configure `.env` with the real URL of your Laravel API:
+      - Local development: EXPO_PUBLIC_API_URL=http://localhost:8000/api
+      - Production:        EXPO_PUBLIC_API_URL=https://your-domain.com/api
+   3. Create a `docs-project/` folder with the concrete project documents
+      (screens, models, endpoints, brief, and any project-specific specification)
+      and/or start building and designing screens directly.
+      The `.github/copilot-instructions.md` file ensures the agent follows
+      all stack rules and best practices on every action.
    ```
 
 ---

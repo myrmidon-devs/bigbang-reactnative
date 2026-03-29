@@ -20,11 +20,25 @@
 
 ### Step 1.1 — Create Expo project
 
+> **REGLA CRÍTICA — Siempre en la raíz:**
+> El proyecto se crea SIEMPRE en TARGET_DIR (raíz del workspace). NUNCA pasar PROJECT_NAME
+> como argumento a `create-expo-app` — eso crearía un subdirectorio. Usar siempre el punto (`.`).
+> Tras el scaffold, actualizar el campo `name` y `slug` de `app.json` con PROJECT_NAME.
+
 ```bash
-# Use pnpm or npm based on pre-flight check
-pnpm create expo-app {PROJECT_NAME}
-cd {PROJECT_NAME}
+# Navegar a TARGET_DIR (raíz del workspace) y crear el proyecto EN ESE DIRECTORIO
+cd {TARGET_DIR}
+
+# pnpm (recomendado)
+pnpm create expo-app .
+
+# npm (fallback)
+npx create-expo-app .
 ```
+
+A continuación, editar `app.json` para establecer el nombre real del proyecto:
+- `"name"` → PROJECT_NAME
+- `"slug"` → PROJECT_NAME
 
 Then align the runtime to the stable SDK line documented in `docs/project-setup.md` before the first start. Do NOT leave the project on `expo@latest` or any `@latest` template line if Expo Go compatibility matters.
 

@@ -158,6 +158,11 @@ En Nativewind v4, con Expo, la integración correcta del template se apoya en `g
 6. `src/App.tsx` importa `../global.css`.
 7. `npx expo-doctor@latest` no reporta mismatches del SDK.
 
+> **`verifyInstallation()` en modo desarrollo:**
+> `src/App.tsx` llama a `verifyInstallation()` de `nativewind` dentro de `if (__DEV__)`.
+> Esto valida en consola que Babel, Metro y el preset están configurados correctamente.
+> Se ejecuta solo en desarrollo y no afecta el bundle de producción. No eliminar.
+
 ---
 
 ## Guía de Uso

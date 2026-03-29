@@ -89,13 +89,17 @@ Run: pnpm --version
 - If user declines → store as PKG_MANAGER=npm
 ```
 
-### 1.2 Ask the user for the project name
+### 1.2 Derive project name — do NOT ask the user
 
 ```
-Ask: "¿Cómo se llama el proyecto? (kebab-case, ej: my-awesome-app)"
-Store the answer as PROJECT_NAME.
-Ask: "¿En qué directorio quieres crear el proyecto? (default: directorio actual)"
-Store as TARGET_DIR.
+TARGET_DIR = workspace root (current directory).
+PROJECT_NAME = name of the workspace root folder, converted to kebab-case.
+  → e.g. workspace folder "MyAwesomeApp" → PROJECT_NAME = "my-awesome-app"
+
+NEVER ask the user for a project name or a target directory.
+NEVER run `create-expo-app {PROJECT_NAME}` — that creates a subdirectory.
+ALWAYS run `create-expo-app .` inside TARGET_DIR.
+PROJECT_NAME is only used to populate `app.json` fields (`name` and `slug`).
 ```
 
 ### 1.3 Initialize progress tracker
@@ -154,6 +158,7 @@ CONVENTIONS (non-negotiable — apply to EVERY file you create):
 - Zustand for auth state, React Query for server data, NEVER Redux
 - expo-secure-store for tokens, NEVER AsyncStorage
 - Max 300 lines per screen, 150 per component
+- NEVER run `create-expo-app {PROJECT_NAME}` — this creates a subdirectory. ALWAYS run `create-expo-app .` inside TARGET_DIR. PROJECT_NAME is derived from the workspace folder name and only goes in app.json.
 
 REPORT BACK with exactly one of:
 - "PHASE {N} COMPLETE — all {X} files created, all checks passed"

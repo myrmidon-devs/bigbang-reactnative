@@ -21,15 +21,21 @@ Pasos para crear un proyecto desde cero. Seguir en orden. El agente debe verific
 
 > Objetivo: partir de un proyecto Expo limpio, pero **sin** asumir que `latest` es una línea estable compatible con Expo Go.
 
+> **REGLA CRÍTICA — Siempre en la raíz del workspace:**
+> Ejecuta el comando **desde dentro del directorio de destino** usando `.` (punto) como nombre.
+> Nunca uses `create-expo-app my-app` — eso crea un subdirectorio `my-app/` y el proyecto
+> quedaría anidado fuera de la raíz. Los archivos de scaffolding (package.json, src/, app.json…)
+> deben vivir en la raíz del workspace junto a `docs/`, `.copilot/`, etc.
+
 ```bash
-# pnpm (recomendado)
-pnpm create expo-app my-app
-cd my-app
+# pnpm (recomendado) — crea el proyecto en el directorio actual
+pnpm create expo-app .
 
 # npm (fallback)
-npx create-expo-app my-app
-cd my-app
+npx create-expo-app .
 ```
+
+Tras el scaffold, editar `app.json` para poner el nombre real del proyecto en los campos `name` y `slug`.
 
 ### Regla crítica de Expo Go
 

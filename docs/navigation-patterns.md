@@ -153,14 +153,14 @@ import { AppStack } from './stacks/AppStack'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-export function RootNavigator() {
-  const { token, isLoaded } = useAuthStore()
+export function RootNavigator(): React.JSX.Element | null {
+  const { token, isGuest, isLoaded } = useAuthStore()
 
   if (!isLoaded) return null
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {token ? (
+      {token || isGuest ? (
         <Stack.Screen name="App" component={AppStack} />
       ) : (
         <Stack.Screen name="Auth" component={AuthStack} />
@@ -171,6 +171,7 @@ export function RootNavigator() {
 ```
 
 > **Importante:** `RootNavigator` apunta a `AppStack` (no a `AppTabs`). `AppStack` se encarga de montar los tabs y las pantallas full-screen.
+> La condición `token || isGuest` permite que los usuarios en modo invitado accedan a la app sin autenticación completa.
 
 ---
 

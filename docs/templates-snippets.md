@@ -533,37 +533,42 @@ export function Home(): React.JSX.Element {
 // src/screens/Profile/index.tsx
 import React from 'react'
 import { View, Text } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button } from '@/components/Button'
 import { useAuth } from '@/hooks/useAuth'
 
-export function Profile() {
+export function Profile(): React.JSX.Element {
   const { user, isGuest, logout } = useAuth()
 
   if (isGuest) {
     return (
-      <View className="flex-1 bg-white justify-center p-6">
-        <Text className="text-2xl font-bold text-gray-900 text-center mb-3">Eres un invitado</Text>
-        <Text className="text-gray-500 text-center mb-6">
-          Inicia sesión o crea una cuenta para acceder a tu perfil con todos los datos.
-        </Text>
-        <View className="gap-3">
-          <Button label="Crear cuenta" onPress={logout} variant="primary" />
-          <Button label="Cerrar sesión" onPress={logout} variant="danger" />
+      <SafeAreaView className="flex-1 bg-white">
+        <View className="flex-1 justify-center px-6">
+          <Text className="text-2xl font-bold text-gray-900 text-center mb-3">Eres un invitado</Text>
+          <Text className="text-gray-500 text-center mb-6">
+            Inicia sesión o crea una cuenta para acceder a tu perfil con todos los datos.
+          </Text>
+          <View className="gap-3">
+            <Button label="Registrarse" onPress={logout} variant="primary" />
+            <Button label="Iniciar sesión" onPress={logout} variant="secondary" />
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 
   return (
-    <View className="flex-1 bg-white p-4">
-      <Text className="text-2xl font-bold text-gray-900">Perfil</Text>
-      <Text className="text-gray-500 mt-2">{user?.name ?? 'Usuario'}</Text>
-      <Text className="text-gray-400">{user?.email ?? ''}</Text>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-1 p-4">
+        <Text className="text-2xl font-bold text-gray-900">Perfil</Text>
+        <Text className="text-gray-500 mt-2">{user?.name ?? 'Usuario'}</Text>
+        <Text className="text-gray-400 text-sm mt-1">{user?.email ?? ''}</Text>
 
-      <View className="mt-6">
-        <Button label="Cerrar sesión" variant="danger" onPress={logout} />
+        <View className="mt-10">
+          <Button label="Cerrar sesión" variant="danger" onPress={logout} />
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 ```
@@ -705,7 +710,9 @@ export * from './hooks'
 import '../global.css'
 import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { verifyInstallation } from 'nativewind'
 import { RootNavigator } from '@/navigation'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { useAuthStore } from '@/store/authStore'
@@ -720,28 +727,35 @@ const queryClient = new QueryClient({
   },
 })
 
-function AppBootstrap() {
+function AppBootstrap(): null {
   const loadToken = useAuthStore((s) => s.loadToken)
-  useEffect(() => { loadToken() }, [loadToken])
+  useEffect(() => {
+    if (__DEV__) {
+      verifyInstallation()
+    }
+    loadToken()
+  }, [loadToken])
   return null
 }
 
-export default function App() {
+export default function App(): React.JSX.Element {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ErrorBoundary>
-        <AppBootstrap />
-        <NavigationContainer>
-          <RootNavigator />
-        </NavigationContainer>
+    <SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        <ErrorBoundary>
+          <AppBootstrap />
+          <NavigationContainer>
+            <RootNavigator />
+          </NavigationContainer>
+        </ErrorBoundary>
         <Toast />
-      </ErrorBoundary>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </SafeAreaProvider>
   )
 }
 ```
 
-> **Nota:** `<Toast />` se renderiza como último hijo para aparecer encima de todo. `<ErrorBoundary>` envuelve toda la app para capturar errores de renderizado no controlados.
+> **Nota:** `<Toast />` se coloca fuera de `<ErrorBoundary>` para que las notificaciones sigan apareciendo incluso si la app falla. `<ErrorBoundary>` envuelve el árbol de navegación para capturar errores de renderizado no controlados. `verifyInstallation()` valida la configuración de Nativewind en modo desarrollo y no afecta producción.
 
 ---
 

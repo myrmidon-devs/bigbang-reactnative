@@ -34,13 +34,14 @@ Este archivo define el flujo operativo exacto que debe seguir un agente IA para 
 ### PASO 1 — Leer `docs/project-setup.md`
 
 **Acción:** Ejecutar los pasos de bootstrap en orden:
-1. Crear app con `create-expo-app` (pnpm o npm según Regla 0)
-2. Renombrar `App.js` → `App.tsx`
-3. Crear estructura de carpetas `src/`
-4. Instalar dependencias (nativewind, axios, react-navigation)
-5. Crear `tsconfig.json` con alias `@/`
-6. Crear `babel.config.js` con `module-resolver`
-7. Crear `.env.example`
+1. Crear app con `create-expo-app` usando `.` (punto) como destino — **NUNCA** `create-expo-app nombre-proyecto`, eso crea un subdirectorio. El proyecto siempre se genera en la raíz del workspace.
+2. Actualizar `app.json` con el nombre real del proyecto (`name` y `slug`)
+3. Renombrar `App.js` → `App.tsx`
+4. Crear estructura de carpetas `src/`
+5. Instalar dependencias (nativewind, axios, react-navigation)
+6. Crear `tsconfig.json` con alias `@/`
+7. Crear `babel.config.js` con `module-resolver`
+8. Crear `.env.example`
 
 **Verificación obligatoria:**
 - [ ] Carpeta `src/` creada con subcarpetas: `screens/ components/ navigation/ services/ hooks/ store/ types/ utils/ theme/ assets/`

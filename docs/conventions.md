@@ -61,11 +61,12 @@ const data: any = response // prohibido
 - ✅ Estilos con `className` Nativewind, no en archivos separados
 - ✅ Excepciones: animaciones complejas pueden usar `Animated` + Nativewind
 - ✅ Usar `expo-image` en lugar de `<Image>` de React Native (caché, blur placeholder, rendimiento en listas)
+  - **Excepción:** La pantalla `Home` del template usa `<Image>` de `react-native` para asegurar compatibilidad con Expo Go sin configuración adicional. En proyectos que no usen Expo Go, migrar a `expo-image`.
 - ✅ **Todas las screens deben importar y usar `SafeAreaView` desde `react-native-safe-area-context`** como contenedor raíz. Esto respeta el status bar, notch, y dynamic island en todos los dispositivos.
 - ❌ No crear archivos `.styles.ts`
 - ❌ No usar `StyleSheet.create()`
 - ❌ No mezclar Tailwind con StyleSheet
-- ❌ No usar `<Image>` de `react-native` directamente (usar `expo-image`)
+- ❌ No usar `<Image>` de `react-native` directamente (usar `expo-image`, salvo la excepción documentada en Home)
 
 ### SafeAreaView en Screens
 

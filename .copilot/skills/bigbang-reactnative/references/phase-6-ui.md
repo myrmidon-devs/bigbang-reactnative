@@ -74,10 +74,15 @@ Copy from `docs/templates-snippets.md` section "Register — Registro":
 
 ### Step 6.8 — Create `src/screens/Home/index.tsx`
 
-Copy from `docs/templates-snippets.md` section "Home — Pantalla principal":
-- Simple placeholder with ScrollView
-- Title "Home" and description text
-- Uses `className` for styles
+Copy the **COMPLETE code** from `docs/templates-snippets.md` section "Home — Pantalla principal (dentro de tabs)". Do NOT simplify or create a placeholder — the template includes real mock data and a full layout:
+- `RECOMMENDED` and `NEW_APARTMENTS` mock data arrays (hardcoded constants at the top)
+- `SafeAreaView` + outer `ScrollView` (vertical)
+- Header: avatar image, greeting with `user?.name` / `'Invitado'` (via `useAuth`), notifications icon
+- Horizontal `ScrollView` for "Recomendados" with image cards showing title, location and price
+- Vertical list "Nuevos apartamentos" with thumbnail + room count using `Ionicons`
+- Uses `Image` from `react-native` (NOT `expo-image`) for Expo Go compatibility
+- Uses `Ionicons` from `@expo/vector-icons`
+- Uses `useAuth` from `@/hooks/useAuth` to read `user` and `isGuest`
 
 ### Step 6.9 — Create `src/screens/Profile/index.tsx`
 

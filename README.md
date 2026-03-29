@@ -40,7 +40,7 @@ Orden de lectura y ejecución:
 | 6 | `docs/templates-snippets.md`  | Para crear pantallas base y navegadores  |
 | 7 | `docs/services-and-api.md`    | Para capa de servicios con Axios         |
 | 8 | `docs/hooks-and-state.md`     | Para hooks y estado global               |
-| 9 | `docs/testing-ci.md`          | Para configurar tests (opcional en MVP)  |
+| 9 | `docs/testing-ci.md`          | Para configurar tests                    |
 
 ---
 

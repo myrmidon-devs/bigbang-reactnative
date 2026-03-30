@@ -9,15 +9,17 @@ Antes de cualquier acción, lee `docs/agent-instructions.md`. Define el flujo co
 
 - **Estilos:** Nativewind v4 siempre. Nunca `StyleSheet.create()`. Nunca estilos inline en píxeles fijos.
 - **Expo:** Nunca instalar `expo@latest` ni usar plantillas `@latest` sin fijar una línea estable de SDK compatible con Expo Go. Verifica con `expo-doctor` antes del primer arranque.
+- **Bootstrap:** Si se crea el proyecto desde este template, se genera **siempre en la raíz del workspace** con `create-expo-app .`. Nunca crear un subdirectorio adicional. El nombre del proyecto se deriva de la carpeta raíz y se refleja en `app.json` (`name` y `slug`).
 - **Arquitectura 3 capas:** `Screen → Hook → Service`. La screen nunca llama a Axios directamente.
 - **Estado global:** Zustand para sesión auth. React Query (`useQuery`/`useMutation`) para datos del servidor. Sin Redux.
 - **HTTP:** Axios desde `src/services/api.ts`. Nunca `fetch` directo.
 - **Imports:** Siempre alias `@/`. Nunca rutas relativas `../`. Orden: React → librerías → locales.
 - **TypeScript:** Sin `any`. Todas las funciones con tipo de retorno explícito.
 - **Logs:** Nunca `console.log`. Usar `src/services/logger.ts`.
-- **Errores de API:** Siempre en el hook (`onError`). Nunca en la screen. Nunca `Alert.alert()` directo.
+- **Errores de API:** Siempre en el hook (`onError`). Nunca en la screen. Nunca `Alert.alert()` directo. Todo proyecto debe tener `useToast` + `<Toast />` y `ErrorBoundary` en `App.tsx`.
 - **Gestor de paquetes:** `pnpm` preferido. Si no está disponible, preguntar antes de usar `npm`.
 - **Componentes:** Máximo 300 líneas por archivo. Sin archivos `.styles.ts`.
+- **App shell:** `App.tsx` debe usar `SafeAreaProvider` como provider global, `QueryClientProvider`, `ErrorBoundary`, `NavigationContainer`, `RootNavigator` y `<Toast />` como último hijo. En desarrollo, `verifyInstallation()` de Nativewind va dentro de `if (__DEV__)`.
 - **SafeAreaView:** Todas las screens deben estar envueltas en `<SafeAreaView>` para respetar el status bar, notch, y dynamic island. `SafeAreaProvider` está en `App.tsx` (global).
 - **Guest mode:** El template soporta "Entrar como invitado" desde Login. Usar `useAuth().loginAsGuest()` para acceder a tabs sin autenticación. Screens pueden checar `isGuest` para adaptar contenido (ej: Profile muestra UI diferente para invitados).
 

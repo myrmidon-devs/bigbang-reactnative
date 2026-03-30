@@ -5,6 +5,18 @@ version: 2.0
 
 # Changelog
 
+## 2026-03 v2.1 — Alineación final de `.github/copilot-instructions.md`
+
+**Motivación:** Aunque la skill y los docs base ya se habían endurecido, el archivo `.github/copilot-instructions.md` todavía no reflejaba explícitamente varias reglas operativas críticas: ejecución estricta, scaffold en raíz, shell real de `App.tsx` y cierre obligatorio con siguientes pasos.
+
+**Cambios:**
+- `.github/copilot-instructions.md` — Añadidas reglas explícitas de ejecución estricta: seguir instrucciones literalmente, validar checklist por checklist, no inventar nada y consultar ante ambigüedad.
+- `.github/copilot-instructions.md` — Documentado que el bootstrap del proyecto se hace siempre en la raíz con `create-expo-app .`, sin crear subdirectorios adicionales.
+- `.github/copilot-instructions.md` — Añadida la composición obligatoria de `App.tsx`: `SafeAreaProvider`, `QueryClientProvider`, `ErrorBoundary`, `NavigationContainer`, `RootNavigator`, `Toast` y `verifyInstallation()` en desarrollo.
+- `.github/copilot-instructions.md` — Añadido que el cierre de un bootstrap debe incluir no solo resumen sino también los siguientes pasos operativos.
+
+---
+
 ## 2026-03 v2.0 — Alineación final de skill, references y documentación base
 
 **Motivación:** La skill `bigbang-reactnative`, sus phases de referencia y varios documentos base habían acumulado pequeñas desalineaciones. Ninguna por separado parecía grande, pero en conjunto permitían que el agente generase proyectos incompletos, mezclara convenciones antiguas o no comunicara correctamente el cierre y los siguientes pasos.
